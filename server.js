@@ -4,6 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 const userService = require("./user-service.js");
+const jwt = require("jsonwebtoken");
 
 const HTTP_PORT = process.env.PORT || 8080;
 
@@ -22,7 +23,13 @@ app.post("/api/user/register", (req, res) => {
 app.post("/api/user/login", (req, res) => {
     userService.checkUser(req.body)
     .then((user) => {
-        res.json({ "message": "login successful"});
+        jwt.sign({ "user": user }, process.env.JWT_SECRET, { algorithm: 'RS256' }, (err, token) => {
+            if (err) {
+                res.status(500).json({ "message": "Error generating token" });
+            } else {
+                res.json({ "token": token });
+            }
+        });
     }).catch(msg => {
         res.status(422).json({ "message": msg });
     });
