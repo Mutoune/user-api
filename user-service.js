@@ -46,7 +46,7 @@ module.exports.registerUser = function (userData) {
                 let newUser = new User(userData);
 
                 newUser.save().then(() => {
-                    resolve("User " + userData.userName + " successfully registered");  
+                    resolve("User " + userData.userName + " successfully registered");
                 }).catch(err => {
                     if (err.code == 11000) {
                         reject("User Name already taken");
@@ -73,8 +73,8 @@ module.exports.checkUser = function (userData) {
                     }
                 });
             }).catch(err => {
-                reject("Unable to find user " + userData.userName);
-            });
+            reject("Unable to find user " + userData.userName);
+        });
     });
 };
 
@@ -86,8 +86,8 @@ module.exports.getFavourites = function (id) {
             .then(user => {
                 resolve(user.favourites)
             }).catch(err => {
-                reject(`Unable to get favourites for user with id: ${id}`);
-            });
+            reject(`Unable to get favourites for user with id: ${id}`);
+        });
     });
 }
 
@@ -137,8 +137,8 @@ module.exports.getHistory = function (id) {
             .then(user => {
                 resolve(user.history)
             }).catch(err => {
-                reject(`Unable to get history for user with id: ${id}`);
-            });
+            reject(`Unable to get history for user with id: ${id}`);
+        });
     });
 }
 
